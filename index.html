@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Database</title>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+</head>
+
+<body>
+    <button onclick="query()">Query</button>
+    <script>
+        // Firebase configuaration
+        var config = {
+            apiKey: "AIzaSyCcl2jCPFCebAgYpfygKlXraqy4N0lrN8o",
+            authDomain: "company-173ab.firebaseapp.com",
+            databaseURL: "https://company-173ab.firebaseio.com",
+            projectId: "company-173ab",
+            storageBucket: "",
+            messagingSenderId: "289097515037"
+        };
+        firebase.initializeApp(config);
+
+        const db = firebase.database().ref().child('accounts');
+
+        function updater(key, data){
+            if(data.nature == "Current Asset"){
+                db.child(key).update({flag : 1});
+            }
+            if(data.nature == "Non-Current Asset"){
+                db.child(key).update({flag : 2});
+            }
+            if(data.nature == "Current Liability"){
+                db.child(key).update({flag : 3});
+            }
+            if(data.nature == "Non-Current Liability"){
+                db.child(key).update({flag : 4});
+            }
+            if(data.nature == "Equity"){
+                db.child(key).update({flag : 5});
+            }
+            if(data.nature == "Expense"){
+                db.child(key).update({flag : 6});
+            }
+            if(data.nature == "Revenue"){
+                db.child(key).update({flag : 7});
+            }
+            if(data.nature == "Withdrawal"){
+                db.child(key).update({flag : 8});
+            }
+            if(data.nature == "Contra Revenue"){
+                db.child(key).update({flag : 9});
+            }
+            if(data.nature == "Cost of Goods Sold"){
+                db.child(key).update({flag : 10});
+            }
+            if(data.nature == "Production"){
+                db.child(key).update({flag : 11});
+            }
+            if(data.nature == "Contra"){
+                db.child(key).update({flag : 12});
+            }
+            if(data.nature == "Contra Expense"){
+                db.child(key).update({flag : 13});
+            }
+        }
+
+        function query() {
+            db.on('value', function (snapshot) {
+                // console.log(snapshot.val());
+                var arr = snapshot.val();
+                for(key in arr){
+                    updater(key, arr[key]);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
